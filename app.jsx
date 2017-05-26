@@ -1,5 +1,5 @@
 function Application(props) {
-   {/* Components must return a single virtual DOM element, therefore the h1 and p are wrapped in a div */}
+  {/* Components must return a single virtual DOM element, therefore the h1 and p are wrapped in a div */}
   return (
     <div className='scoreboard'>
       <div className='header'>
@@ -21,7 +21,11 @@ function Application(props) {
         </div>
       </div>
     </div>
-    );
+  );
 }
+
+Application.propTypes = {
+  title: React.PropTypes.string.isRequired,
+};
 
 ReactDOM.render(< Application title='Scoreboard'/>, document.getElementById('container'));
