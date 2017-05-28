@@ -10,6 +10,28 @@ Header.propTypes = {
   title: React.PropTypes.string.isRequired,
 };
 
+function Player(props) {
+  return (
+    <div className='player'>
+      <div className='player-name'>
+        {props.name}
+      </div>
+      <div className='player-score'>
+        <div className='counter'>
+          <button className='counter-action decrement'> - </button>
+          <div className='counter-score'> {props.score} </div>
+          <button className='counter-action increment'> + </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Player.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  socore: React.PropTypes.number.isRequired,
+};
+
 function Application(props) {
   {/* Components must return a single virtual DOM element, therefore the h1 and p are wrapped in a div */}
   return (
@@ -17,18 +39,8 @@ function Application(props) {
       < Header title={props.title} />
 
       <div className='players'>
-        <div className='player'>
-          <div className='player-name'>
-            Jane Doe
-          </div>
-          <div className='player-score'>
-            <div className='counter'>
-              <button className='counter-action decrement'> - </button>
-              <div className='counter-score'> 29 </div>
-              <button className='counter-action increment'> + </button>
-            </div>
-          </div>
-        </div>
+        < Player name='Jane Doe' score={29} />
+        < Player name='John Doe' score={28} />
       </div>
     </div>
   );
