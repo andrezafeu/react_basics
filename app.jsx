@@ -1,10 +1,20 @@
+function Header(props) {
+  return (
+    <div className='header'>
+      <h1>{props.title}</h1>
+    </div>
+  );
+}
+
+Header.propTypes = {
+  title: React.PropTypes.string.isRequired,
+};
+
 function Application(props) {
   {/* Components must return a single virtual DOM element, therefore the h1 and p are wrapped in a div */}
   return (
     <div className='scoreboard'>
-      <div className='header'>
-        <h1>{props.title}</h1>
-      </div>
+      < Header title={props.title} />
 
       <div className='players'>
         <div className='player'>
