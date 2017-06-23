@@ -24,6 +24,7 @@ Header.propTypes = {
 };
 
 function Counter(props) {
+  {/* Components must return a single virtual DOM element, therefore the contents need to be wrapped in a div */}
   return (
     <div className='counter'>
       <button className='counter-action decrement' > - </button>
@@ -55,31 +56,42 @@ Player.propTypes = {
   score: React.PropTypes.number.isRequired,
 };
 
-function Application(props) {
-  {/* Components must return a single virtual DOM element, therefore the h1 and p are wrapped in a div */}
-  return (
-    <div className='scoreboard'>
-      < Header title={props.title} />
-      <div className='players'>
-        {props.players.map(function(player) {
-          return <Player name={player.name} score={player.score} key={player.id} />
-        })}
+var Application = React.createClass({
+
+  propTypes: {
+    title: React.PropTypes.string,
+    initialPlayers: React.PropTypes.arrayOf(React.PropTypes.shape({
+      name: React.PropTypes.string.isRequired,
+      score: React.PropTypes.number.isRequired,
+      id: React.PropTypes.number.isRequired,
+    })).isRequired,
+  },
+
+  getDefaultProps: function() {
+    return {
+      title: 'Scoreboard',
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      players: this.props.initialPlayers,
+
+    };
+  },
+
+  render: function() {
+    return (
+      <div className='scoreboard'>
+        < Header title={this.props.title} />
+        <div className='players'>
+          {this.state.players.map(function(player) {
+            return <Player name={player.name} score={player.score} key={player.id} />
+          })}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+});
 
-Application.propTypes = {
-  title: React.PropTypes.string,
-  players: React.PropTypes.arrayOf(React.PropTypes.shape({
-    name: React.PropTypes.string.isRequired,
-    score: React.PropTypes.number.isRequired,
-    id: React.PropTypes.number.isRequired,
-  })).isRequired,
-};
-
-Application.defaultProps = {
-  title: 'Scoreboard',
-};
-
-ReactDOM.render(< Application players={PLAYERS} />, document.getElementById('container'));
+ReactDOM.render(< Application initialPlayers={PLAYERS} />, document.getElementById('container'));
