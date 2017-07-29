@@ -107,6 +107,7 @@ function Player(props) {
   return (
     <div className='player'>
       <div className='player-name'>
+        <a className='remove-player' onClick={props.onRemove}>x</a>
         {props.name}
       </div>
       <div className='player-score'>
@@ -120,6 +121,7 @@ Player.propTypes = {
   name: React.PropTypes.string.isRequired,
   score: React.PropTypes.number.isRequired,
   onScoreChange: React.PropTypes.func.isRequired,
+  onRemove: React.PropTypes.func.isRequired,
 };
 
 var Application = React.createClass({
@@ -164,6 +166,12 @@ var Application = React.createClass({
     nextId +=1;
   },
 
+  onRemovePlayer: function(index) {
+    {/* Splice: 1st arg is an index of where to start removing items from array. 2nd arg is how many items to remove. */}
+    this.state.players.splice(index, 1);
+    this.setState(this.state);
+  },
+
   render: function() {
     return (
       <div className='scoreboard'>
@@ -173,6 +181,7 @@ var Application = React.createClass({
             return (
               <Player
                 onScoreChange={function(delta) {this.onScoreChange(index, delta)}.bind(this)}
+                onRemove={function() {this.onRemovePlayer(index)}.bind(this)}
                 name={player.name}
                 score={player.score}
                 key={player.id} />
